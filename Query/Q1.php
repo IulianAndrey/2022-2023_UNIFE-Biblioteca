@@ -1,6 +1,6 @@
 <?php
 $parentDir = dirname(__DIR__);
-$pageTile = "Query2";
+$pageTile = "Query1";
 
 $query = "
 SELECT
@@ -30,9 +30,11 @@ ON Libro.ID_DIPARTIMENTO= Dipartimento.ID_D
     </div>
 
     <?php
-    $parametroRicerca = $_POST['ricerca_libro'];
-    if (isset($parametroRicerca)) {
-        $query .= " WHERE Libro.titolo LIKE '%" . $parametroRicerca . "%'";
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $parametroRicerca = $_POST['ricerca_libro'];
+        if (isset($parametroRicerca)) {
+            $query .= " WHERE Libro.titolo LIKE '%" . $parametroRicerca . "%'";
+        }
     }
     require_once($parentDir . '/PHP/funcBuildTable.php');
     $result = $conn->query($query);
@@ -42,6 +44,7 @@ ON Libro.ID_DIPARTIMENTO= Dipartimento.ID_D
 
     echo BuildTable($result);
     ?>
+
+    <?php include $parentDir . '/res/footer.php'; ?>
 </body>
-<?php include 'footer.php'; ?>
 </html>

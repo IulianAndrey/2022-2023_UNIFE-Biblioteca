@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($selectedTable) {
                 $file = $_FILES["file"]["tmp_name"];
                 $file = mysqli_real_escape_string($conn, $file);
-                $sql = "LOAD DATA INFILE '$file' INTO TABLE $selectedTable FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' IGNORE 1 LINES";
+                $sql = "LOAD DATA INFILE '$file' INTO TABLE $selectedTable FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n'";
 
                 if ($conn->query($sql) !== TRUE) {
                     $output .= "Error: " . $conn->error . "<br>";

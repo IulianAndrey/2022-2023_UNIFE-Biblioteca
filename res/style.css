@@ -12,12 +12,23 @@ body {
 }
 
 .container {
-    width: 60%; /*larghezza*/
+    width: 60%;
     margin: 20px auto;
     padding: 20px;
     background-color: #ffffff;
     border-radius: 8px;
 }
+
+.row {
+    display: flex;
+    align-items: center;
+}
+
+    .row > input, .row > select {
+        height: 25px;
+        margin-left: 5px;
+    }
+
 
 h1 {
     color: #3498db;
@@ -33,11 +44,14 @@ h3.title {
     padding-left: 10%;
     color: #7192fd;
 }
-h3{
+
+h3 {
     padding: 10px;
 }
 
-
+form p {
+    text-align: left;
+}
 
 input[type="submit"], .button {
     background-color: #e67e22;

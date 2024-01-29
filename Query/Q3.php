@@ -37,6 +37,8 @@ include($parentDir.'/res/head.php');
                 <?php
                 echo "<select name='ricerca_luogo_autore'>
                 ";
+                    echo "<option value=\"\">"."Seleziona luogo di nascita"."</option>";
+
                 while ($row = mysqli_fetch_assoc($resultLuogoNascita)) {
                     echo "<option value=".$row['luogo_nascita'].">".$row['luogo_nascita']."</option>";
                 }

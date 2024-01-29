@@ -5,7 +5,7 @@
 
 $pageTile = "Upload Data";
 require_once('res/head.php');
-
+$output = "";
 
 $parentDir = dirname(__DIR__);
 

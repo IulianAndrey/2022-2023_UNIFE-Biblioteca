@@ -4,7 +4,7 @@ require_once($parentDir . '/PHP/connection_database.php');
 require_once($parentDir . '/PHP/funcBuildTable.php');
 
 $query = "
-SELECT 
+SELECT
 matricola   as 'Matricola',
 nome_u      as 'Nome',
 cognome_u   as 'Cognome',
@@ -30,16 +30,9 @@ include($parentDir . '/res/head.php');
 <body>
     <?php
 
+    echo "<p>Sono presenti $result->num_rows utenti registrati</p><hr>";
 
-/*sql query 4*/
-
-
-/*mostriamo numero utenti*/
-echo "<p>Sono presenti $result->num_rows utenti registrati</p><hr>";
-
-
-/*chiamiamo funzione che costruisce tabella*/
-echo BuildTable($result);
+    echo BuildTable($result);
 
     ?>
 

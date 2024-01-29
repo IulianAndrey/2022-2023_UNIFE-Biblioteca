@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS Prestito(
   id INT PRIMARY KEY AUTO_INCREMENT,
-  rientrato BIT NOT NULL,
+  rientrato INT NOT NULL,
   data_rilascio DATE NOT NULL,
   id_libro INT NOT NULL,
   matricola INT NOT NULL,

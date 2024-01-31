@@ -64,7 +64,7 @@ if (!$result3) {
 <html lang="en">
 <?php
 
-$pageTile = "Query Extra 2";
+$pageTile = "Query Extra 3";
 include($parentDir . '/res/head.php');
 ?>
 

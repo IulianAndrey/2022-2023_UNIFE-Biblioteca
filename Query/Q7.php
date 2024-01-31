@@ -1,25 +1,24 @@
-<?php
-$parentDir = dirname(__DIR__);
-require_once($parentDir . '/PHP/connection_database.php');
-require_once($parentDir . '/PHP/funcBuildTable.php');
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <?php
 $pageTile = "Query7";
+//Definisco il path del parent della cartella attuale
+$parentDir = dirname(__DIR__);
+/*Includo file contenente la testata*/
 include($parentDir . '/res/head.php');
+
+
 ?>
+
 <body>
     <div class="container">
         <h1> Inserisci il range di date </h1>
 
         <form method="POST" action="Q7.php">
-            <br><input type="date" name="data1" /></br>
+            <br><input type="date" name="data1" /><br>
 
-            <br><input type="date" name="data2" /></br>
-            <br><input type="submit" class="submit" value="Ricerca" /></br>
+            <br><input type="date" name="data2" /><br>
+            <br><input type="submit" class="submit" value="Ricerca" /><br>
             <hr />
         </form>
     </div>
@@ -29,7 +28,6 @@ include($parentDir . '/res/head.php');
 
 
     if (!empty($parametroRicerca) && !empty($parametroRicerca2)) {
-        echo $prima_data;
         /*sql query 7*/
         $query = "SELECT *
             FROM Prestito
@@ -40,7 +38,9 @@ include($parentDir . '/res/head.php');
 
 
         /*chiamiamo funzione che costruisce tabella*/
+        echo "<div class=\"row center\">";
         echo BuildTable($result);
+        echo "</div>";
     } else {
         $giorni = 30;
         echo 'LIBRI IN SCADENZA';
@@ -53,7 +53,9 @@ include($parentDir . '/res/head.php');
         order by data_rilascio;"
         ;
         $result = $conn->query($query);
+        echo "<div class=\"row center\">";
         echo BuildTable($result);
+        echo "</div>";
     }
     ?>
 

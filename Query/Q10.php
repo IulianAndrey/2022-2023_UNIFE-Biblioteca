@@ -1,15 +1,20 @@
+<!DOCTYPE html>
+<html lang="it">
 <?php
+$pageTile = "Query 10";
+//Definisco il path del parent della cartella attuale
 $parentDir = dirname(__DIR__);
-require_once($parentDir . '/PHP/connection_database.php');
-require_once($parentDir . '/PHP/funcBuildTable.php');
+/*Includo file contenente la testata*/
+include($parentDir . '/res/head.php');
+//def. query
 
 
 $query ="
 SELECT
-    Autore.id_autore,
-    Autore.nome_a,
-    Autore.cognome_a,
-    COUNT(Libro.id_libro) AS Numero_libri
+    Autore.id_autore AS 'ID',
+    Autore.nome_a AS 'Nome',
+    Autore.cognome_a AS 'Cognome',
+    COUNT(Libro.id_libro) AS 'Numero Libri'
 FROM
     Libro_Autore
 LEFT OUTER JOIN Libro ON Libro_Autore.id_libro = Libro.id_libro
@@ -20,32 +25,27 @@ ORDER BY COUNT(Libro.id_libro) DESC
 ";
 
 $result = $conn->query($query);
-?>
 
-<!DOCTYPE html>
-<html lang="en">
-<?php
+//verifico corretta esecuzione query
+if ($result == TRUE) {
+    $outputInfo[] = "query eseguita senza errori!";
+} else {
+    $outputInfo[] = "Errore query:" . $conn->error;
+}
 
-$pageTile = "Query 10";
-include($parentDir . '/res/head.php');
 ?>
 
 <body>
 
 
     <?php
-
-
-    //$parametroRicerca = $_POST['anno']; /*anno che si vuole va nella variabile parametro_ricerca*/
-
-    /*sql query 10*/
-
-
-
+    //exec query
     $result = $conn->query($query);
 
     /*chiamiamo funzione che costruisce tabella*/
+    echo "<div class=\"row center\">";
     echo BuildTable($result);
+    echo "</div>";
 
     include $parentDir . '/res/footer.php'; ?>
 </body>

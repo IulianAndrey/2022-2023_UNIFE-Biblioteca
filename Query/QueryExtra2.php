@@ -1,8 +1,12 @@
+<!DOCTYPE html>
+<html lang="it">
 <?php
+$pageTile = "Query Extra 2";
+//Definisco il path del parent della cartella attuale
 $parentDir = dirname(__DIR__);
-require_once($parentDir . '/PHP/connection_database.php');
-require_once($parentDir . '/PHP/funcBuildTable.php');
-
+/*Includo file contenente la testata*/
+include($parentDir . '/res/head.php');
+//def. query
 $query = "
 SELECT
     Autore.id_autore,
@@ -19,26 +23,25 @@ GROUP BY
     Autore.nome_a,
     Autore.cognome_a
 ORDER BY
-    'Numero prestiti'
+    COUNT(Prestito.id)
 DESC
 ";
 
-?>
-
-<!DOCTYPE html>
-<html lang="en">
-<?php
-
-$pageTile = "Query Extra 2";
-include($parentDir . '/res/head.php');
+$result = $conn->query($query);
+//verifico corretta esecuzione query
+if ($result == TRUE) {
+    $outputInfo[] = "query eseguita senza errori!";
+} else {
+    $outputInfo[] = "Errore query:" . $conn->error;
+}
 ?>
 
 <body>
     <?php
-    $result = $conn->query($query);
-
     /*chiamiamo funzione che costruisce tabella*/
+    echo "<div class=\"row center\">";
     echo BuildTable($result);
+    echo "</div>";
 
     include $parentDir . '/res/footer.php'; ?>
 </body>

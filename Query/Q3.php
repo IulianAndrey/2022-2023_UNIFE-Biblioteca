@@ -1,19 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
 <?php
+
+$pageTile = "Query3";
+//Definisco il path del parent della cartella attuale
 $parentDir = dirname(__DIR__);
-require_once($parentDir.'/PHP/connection_database.php');
-require_once($parentDir.'/PHP/funcBuildTable.php');
+/*Includo file contenente la testata*/
+include($parentDir . '/res/head.php');
 
 $queryLuogoNascita = "SELECT luogo_nascita FROM autore GROUP BY luogo_nascita";
 
 $resultLuogoNascita = $conn->query($queryLuogoNascita);
-?>
-
-
-<!DOCTYPE html>
-<html lang="en">
-<?php
-$pageTile = "Query3";
-include($parentDir.'/res/head.php');
+if ($resultLuogoNascita == TRUE) {
+    $outputInfo[] = "query eseguita senza errori!";
+} else {
+    $outputInfo[] = "Errore query:" . $conn->error;
+}
 ?>
 
 <body>
@@ -56,11 +58,19 @@ include($parentDir.'/res/head.php');
         $parametroRicerca3 = $_POST['ricerca_data_autore'] ?? ""; /*Data nascita autore che si vuole va nella variabile parametro_ricerca*/
         $parametroRicerca4 = $_POST['ricerca_luogo_autore'] ?? ""; /*Luogo nascita autore che si vuole va nella variabile parametro_ricerca*/
         $query = "
-        SELECT *
-        FROM Autore
-        WHERE 1 ";
+SELECT
+    Autore.id_autore AS 'ID',
+    Autore.nome_a AS 'Nome',
+    Autore.cognome_a AS 'Cognome',
+    Autore.data_nascita AS 'Data Nascita',
+    Autore.luogo_nascita AS 'Luogo Nascita'
+FROM
+    Autore
+WHERE
+    1
+";
 
-
+        //aggiungo filtro se parametri impostati
         if (isset($parametroRicerca)) {
             $query .= " AND Autore.nome_a LIKE '%".$parametroRicerca."%' ";
         }
@@ -74,16 +84,24 @@ include($parentDir.'/res/head.php');
             $query .= " AND Autore.luogo_nascita LIKE '%".$parametroRicerca4."%' ";
         }
 
-
+        //eseguo query
         $result = $conn->query($query);
 
+        //verifico corretta esecuzione query
+        if ($result == TRUE) {
+            $outputInfo[] = "query eseguita senza errori!";
+        } else {
+            $outputInfo[] = "Errore query:" . $conn->error;
+        }
 
         if (isset($parametroRicerca)) { /*isset controlla se una variabile è vuota*/
             echo "<p>Sono presenti $result->num_rows record per questa ricerca</p><hr>";
         }
 
         /*chiamiamo funzione che costruisce tabella*/
+        echo "<div class=\"row center\">";
         echo BuildTable($result);
+        echo "</div>";
     }
 
 

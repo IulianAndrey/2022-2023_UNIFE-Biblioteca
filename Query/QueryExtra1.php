@@ -1,7 +1,12 @@
+<!DOCTYPE html>
+<html lang="it">
 <?php
+$pageTile = "Query extra 1";
+//Definisco il path del parent della cartella attuale
 $parentDir = dirname(__DIR__);
-require_once($parentDir . '/PHP/connection_database.php');
-require_once($parentDir . '/PHP/funcBuildTable.php');
+/*Includo file contenente la testata*/
+include($parentDir . '/res/head.php');
+//def. query
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $restituito = "1";
@@ -17,16 +22,15 @@ LEFT OUTER JOIN Dipartimento ON Libro.id_dipartimento = Dipartimento.id_d
 WHERE  Libro.titolo LIKE '%" . $parametroRicerca . "%'  AND Prestito.rientrato = $restituito ";
 
         $result = $conn->query($query);
+
+        //verifico corretta esecuzione query
+        if ($result == TRUE) {
+            $outputInfo[] = "query eseguita senza errori!";
+        } else {
+            $outputInfo[] = "Errore query:" . $conn->error;
+        }
     }
 }
-?>
-
-
-<!DOCTYPE html>
-<html lang="en">
-<?php
-$pageTile = "Query extra 1";
-include($parentDir . '/res/head.php');
 ?>
 
 <body>
@@ -42,7 +46,9 @@ include($parentDir . '/res/head.php');
     <?php
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        echo "<div class=\"row center\">";
         echo BuildTable($result);
+        echo "</div>";
     }
 
     include $parentDir . '/res/footer.php';

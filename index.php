@@ -57,7 +57,7 @@ include 'res/head.php';
     </div>
     <!-- sesta query-->
     <div class="container">
-        <form action="Q6.php" method="POST">
+        <form action="Query/Q6.php" method="POST">
             <h4>Query 6</h4>
             <p>Consultare lo storico dei prestiti:</p>
             <input type="submit" class="submit" value="Mostra" />
@@ -66,7 +66,7 @@ include 'res/head.php';
     </div>
     <!-- settima query-->
     <div class="container">
-        <form action="Q7.php" method="POST">
+        <form action="Query/Q7.php">
             <h4>Query 7</h4>
             <p>Ricerca dei prestiti effettuati in un range di date – nel caso in cui non vengano inserite date deve mostrare i prossimi in scadenza (quelli che scadranno in futuro):</p>
             <input type="submit" class="submit" value="Esegui la ricerca" />
@@ -85,7 +85,7 @@ include 'res/head.php';
     </div>
 
     <div class="container">
-        <form action="Q9.php" method="POST">
+        <form action="Query/Q9.php">
             <h4>Query 9</h4>
             <p>Numero di prestiti effettuati in una determinata succursale:</p>
             <input type="submit" class="submit" value="Mostra" />
@@ -93,7 +93,7 @@ include 'res/head.php';
     </div>
 
     <div class="container">
-        <form action="Q10.php" method="POST">
+        <form action="Query/Q10.php" method="POST">
             <h4>Query 10</h4>
             <p>Numero di libri per autore:</p>
             <input type="submit" class="submit" value="Mostra" />
@@ -103,9 +103,23 @@ include 'res/head.php';
     <!-- extra query-->
     <br /><h3 class="title">Query extra</h3><hr /><br />
     <div class="container">
-        <form action="Queryextra1.html" method="POST">
+        <form action="Query/Queryextra1.php">
             <h4>QueryExtra 1</h4>
-            <p>Libri più letti per generazione, maschi e femmine:</p>
+            <p>Cerchiamo disponibilità di un libro e dove lo possiamo trovare</p>
+            <input type="submit" class="submit" value="Mostra" />
+        </form>
+    </div>
+    <div class="container">
+        <form action="Query/Queryextra2.php" method="post">
+            <h4>QueryExtra 2</h4>
+            <p>Classifica autore con i libri piu' presi in prestito</p>
+            <input type="submit" class="submit" value="Mostra" />
+        </form>
+    </div>
+    <div class="container">
+        <form action="Query/Queryextra3.php" method="post">
+            <h4>QueryExtra 3</h4>
+            <p>Classifica biblioteche e classifica libri della prima biblioteca</p>
             <input type="submit" class="submit" value="Mostra" />
         </form>
     </div>

@@ -1,11 +1,17 @@
+<!DOCTYPE html>
+<html lang="it">
 <?php
+$pageTile = "Query 9";
+//Definisco il path del parent della cartella attuale
 $parentDir = dirname(__DIR__);
-require_once($parentDir . '/PHP/connection_database.php');
-require_once($parentDir . '/PHP/funcBuildTable.php');
+/*Includo file contenente la testata*/
+include($parentDir . '/res/head.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $parametroRicerca = $_POST['dipartimento']; /*nome del dipartimento va nella variabile parametro_ricerca*/
+
     if (isset($parametroRicerca)) {
+//def. query
         $query = "
 SELECT
     COUNT(Prestito.id) AS Numero_prestiti
@@ -17,17 +23,18 @@ WHERE Dipartimento.nome_d LIKE '%" . $parametroRicerca . "%' "
         ;
 
         $result = $conn->query($query);
+
+        //verifico corretta esecuzione query
+        if ($result == TRUE) {
+            $outputInfo[] = "query eseguita senza errori!";
+        } else {
+            $outputInfo[] = "Errore query:" . $conn->error;
+        }
     }
 }
 
 
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<?php
-
-$pageTile = "Query 9";
-include($parentDir . '/res/head.php');
 ?>
 
 <body>
@@ -42,7 +49,9 @@ include($parentDir . '/res/head.php');
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "<p>\n\nnumero dei prestiti nel dipartimento di $parametroRicerca</p>";
 
+        echo "<div class=\"row center\">";
         echo BuildTable($result);
+        echo "</div>";
     }
     include $parentDir . '/res/footer.php'; ?>
 </body>

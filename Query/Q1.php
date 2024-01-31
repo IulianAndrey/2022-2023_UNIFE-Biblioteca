@@ -1,25 +1,26 @@
-<?php
-$parentDir = dirname(__DIR__);
-$pageTile = "Query1";
-
-$query = "
-SELECT
-Libro.ID_LIBRO as 'ID',
-Libro.TITOLO as 'Titolo',
-Libro.ISBN as 'ISBN',
-Libro.LINGUA as 'Lingua',
-Libro.ANNO_PUB as 'Anno Pub.',
-Dipartimento.Nome_D as 'Dipartimento'
-/*Libro.NUMERO_COPIE as 'N. Copie'*/
-FROM Libro
-LEFT OUTER JOIN Dipartimento
-ON Libro.ID_DIPARTIMENTO= Dipartimento.ID_D
-";
-
-?>
 <!DOCTYPE html>
 <html lang="it">
-<?php include($parentDir . '/res/head.php'); ?>
+<?php
+$pageTile = "Query 1";
+//Definisco il path del parent della cartella attuale
+$parentDir = dirname(__DIR__);
+/*Includo file contenente la testata*/
+include($parentDir . '/res/head.php');
+
+//Definizione query
+$query = "
+SELECT
+    Libro.ID_LIBRO AS 'ID',
+    Libro.TITOLO AS 'Titolo',
+    Libro.ISBN AS 'ISBN',
+    Libro.LINGUA AS 'Lingua',
+    Libro.ANNO_PUB AS 'Anno Pub.',
+    Dipartimento.Nome_D AS 'Dipartimento'
+FROM
+    Libro
+LEFT OUTER JOIN Dipartimento ON Libro.ID_DIPARTIMENTO = Dipartimento.ID_D
+";
+?>
 <body>
     <div class="container">
         <h3> Nome libro da cercare (anche parzialmente)</h3>
@@ -28,23 +29,43 @@ ON Libro.ID_DIPARTIMENTO= Dipartimento.ID_D
             <input type="submit" class="submit" value="Cerca" />
         </form>
     </div>
-
     <?php
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    //Verifico che la chiamata sia POST
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        //asseg. parametro
         $parametroRicerca = $_POST['ricerca_libro'];
+        //verifica che parametro non sia vuoto
         if (isset($parametroRicerca)) {
             $query .= " WHERE Libro.titolo LIKE '%" . $parametroRicerca . "%'";
+        }else{
+
         }
     }
-    require_once($parentDir . '/PHP/funcBuildTable.php');
+    //Eseguo query
     $result = $conn->query($query);
-    if (isset($parametroRicerca)) {
-        echo "<p>Sono presenti $result->num_rows record per la ricerca: $parametroRicerca</p><hr>";
+
+    //verifico corretta esecuzione query
+    if($result == TRUE){
+        $outputInfo[] = "query eseguita senza errori!";
+    }else{
+        $outputInfo[] = "Errore query:" .$conn->error;
     }
 
-    echo BuildTable($result);
-    ?>
+    //verifica che parametro non sia vuoto
+    if (isset($parametroRicerca)) {
+        echo "<p>Sono presenti $result->num_rows record per la ricerca: $parametroRicerca</p><hr>";
+    } else {
+        echo "<p>Sono presenti $result->num_rows record</p><hr>";
+    }
 
-    <?php include $parentDir . '/res/footer.php'; ?>
+    //costruisco div contenente la tabella
+    echo "<div class=\"row center\">";
+    echo BuildTable($result);
+    echo "</div>";
+
+    /*Includo file contenente il footer*/
+    include $parentDir . '/res/footer.php'; ?>
+
 </body>
 </html>
